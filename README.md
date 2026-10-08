@@ -11,6 +11,7 @@
 |:--:|
 | After a failure, FAR identifies failure-inducing actions using value estimation, then updates the policy with both failure examples and alternative positive examples. The collected trajectories are added to the replay buffer for continual policy improvement. |
 
+Visit our [Project Page](https://hoar012.github.io/FAR-Project/) for video demostrations.
 
 ## BibTeX
 
