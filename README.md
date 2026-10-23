@@ -16,13 +16,11 @@ Visit our [Project Page](https://hoar012.github.io/FAR-Project/) for video demos
 ## BibTeX
 
 ```bibtex
-@misc{hao2026far,
-      title={FAR: Failure-Aware Retry for Test-Time Recovery and Continual Policy Improvement}, 
-      author={Haoran Hao and Shahram Najam Syed and Jeffrey Ichnowski and Jeff Schneider},
-      year={2026},
-      eprint={2607.01111},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO},
-      url={https://arxiv.org/abs/2607.01111}, 
+@inproceedings{hao2026far,
+    title={{FAR}: Failure-Aware Retry for Test-Time Recovery and Continual Policy Improvement},
+    author={Haoran Hao and Shahram Najam Syed and Jeffrey Ichnowski and Jeff Schneider},
+    booktitle={10th Annual Conference on Robot Learning},
+    year={2026},
+    url={https://openreview.net/forum?id=7jMlaTLtAc}
 }
 ```
