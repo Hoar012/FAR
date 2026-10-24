@@ -17,11 +17,11 @@
 Visit our [Project Page](https://hoar012.github.io/FAR-Project/) for video demostrations.
 
 ## 📋 Table of Contents    
-- [🛠️ Setup :](#️-setup-)
-- [💾 Expert datasets:](#-expert-datasets)
+- [🛠️ Setup](#️-setup-)
+- [💾 Expert datasets](#-expert-datasets)
 - [🚀 Training and evaluation](#-training-and-evaluation)
 - [🤝 BibTeX](#-bibtex)
-- [🙏 Acknowledgements:](#-acknowledgements)
+- [🙏 Acknowledgements](#-acknowledgements)
 
 ## 🛠️ Setup :
 Create a ```conda``` environment and install dependencies.
