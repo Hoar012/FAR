@@ -1,0 +1,36 @@
+name: robocasa_env
+channels:
+  - defaults
+dependencies:
+  - python=3.10.16
+  - pip=25.0
+  - setuptools=75.8.0
+  - wheel=0.45.1
+  - pip:
+      - robosuite==1.5.0
+      - pynput==1.7.7
+      - huggingface-hub==0.25.2
+      - transformers==4.45.0
+      - torch==2.3.1
+      - torchvision==0.18.1
+      - torchaudio==2.3.1
+      - --extra-index-url https://download.pytorch.org/whl/cu118
+      - ruamel.yaml==0.18.10
+      - termcolor==2.5.0
+      - h5py==3.13.0
+      - tensorboard==2.19.0
+      - wandb==0.19.8
+      - timm==1.0.15
+      - omegaconf==2.3.0
+      - hydra-submitit-launcher==1.2.0
+      - git+https://github.com/robocasa/robocasa.git@9f14a76cde2b87c473cbbc5a87eb975b80c2cab6
+      - git+https://github.com/facebookresearch/r3m.git@b2334e726887fa0206962d7984c69c5fb09cceab
+      - git+https://github.com/ARISE-Initiative/robomimic.git@59ecd4048b91595b61cbcc2f3e4d9d666e4d4c04
+      - egl-probe==1.0.2
+      - einops==0.8.0
+      - gdown==5.2.0
+      - matplotlib==3.9.2
+      - gym==0.26.2
+      - diffusers==0.32.2
+      - gymnasium==0.29.1
+      - imageio[ffmpeg]==2.34.1

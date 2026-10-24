@@ -1,0 +1,299 @@
+defaults:  
+  # Policy
+  policy: "dp"
+
+  # TTA configs
+  max_retries: 5
+  max_retries_rollout: 5
+  noise_std: 0.1
+  noise_std_decay: 1.0
+  noise_epsilon: 1.0
+
+  tta_cl: True
+  tta:
+    lr: 1e-5
+    update_steps: 10
+    num_pos: 8
+    num_samples: 64
+    epsilon: 0.5
+
+  iql_critic:
+    batch_size: 128
+    epochs: 1
+    warmup_steps: 15000
+    train_steps: 2000
+    ranking_weight: 0.1
+    expectile: 0.7
+    tau: 0.005
+    gamma: 0.99
+    lr: 1e-4
+    eps: 1e-5
+    grad_clip: 100.0
+    ckpt_path: null
+  
+  max_recovery_buffer_size: 500  # Limit the size of recovery buffer
+  max_success_buffer_size: 500
+  max_failure_buffer_size: 500
+  warmup_epochs: 5
+  training_epochs: 50
+  eval_epochs: 5
+  
+  # Directory Configs
+  scratch_dir: "scratch_dir/"
+  datadir: null # Set automatically using the suite
+
+  # General Configs
+  seed: 0
+  deterministic_run: False
+  compile: True
+  device: 'cuda:0'
+  debug: False
+  precision: 32
+
+  # Wandb configs
+  use_wandb: True
+  wandb_entity: 'njuai' # Top level name
+  wandb_project: 'Recovery'
+  wandb_exp_name: null
+
+  # Run Params
+  viz_expert_buffer: False
+  update_dp: False
+  state_only: False
+  generate_highres_eval: False
+
+  train_base: False
+  recovery: False
+  eval_recovery: False
+  warmup_critic: False
+  policy_improvement: False
+
+  # Data params
+  num_exp_trajs: -1 # To be specified when starting a new run
+  num_exp_val_trajs: 1
+  normalize_state_actions: False
+  image_size: 64
+  obs_horizon: 2 # Number of observations to stack
+  action_horizon: 1 # Number of actions to take
+  pred_horizon: 8 # Number of actions to stack
+  num_buffer_transitions: 100000
+  state_dim: -1 # To be set when loading expert data
+  action_dim: -1 # To be set when loading expert data
+
+  # Evaluation
+  eval_num_runs: 100
+  visualize_eval: True # Store videos of all eval runs
+  log_every: 50
+
+  # Environment
+  task: null
+  num_envs: 1
+  time_limit: -1 # overwritten for each env, defined below
+  high_res_render: False # If true, videos will be stored in high resolution
+  highres_img_size: 256
+  
+  # Model
+  reward_EMA: True
+  dyn_hidden: 512
+  dyn_deter: 512
+  dyn_stoch: 32
+  dyn_discrete: 32 # set as 0 for continuous latent
+  dyn_rec_depth: 1
+  dyn_mean_act: 'none'
+  dyn_std_act: 'sigmoid2'
+  dyn_min_std: 0.1
+  grad_heads: ['decoder', 'cont']
+  units: 512
+  act: 'SiLU'
+  norm: True'
+  encoder:
+    {mlp_keys: '.*state.*', cnn_keys: '.*image.*', act: 'SiLU', norm: True, cnn_depth: 32, kernel_size: 4, minres: 4, mlp_layers: 5, mlp_units: 1024, symlog_inputs: True}
+  decoder:
+    {mlp_keys: '.*state.*', cnn_keys: '.*image.*', act: 'SiLU', norm: True, cnn_depth: 32, kernel_size: 4, minres: 4, mlp_layers: 5, mlp_units: 1024, cnn_sigmoid: False, image_dist: mse, vector_dist: symlog_mse, outscale: 1.0}
+  residual_actor:
+    {layers: 2, dist: 'normal', entropy: 3e-4, unimix_ratio: 0.01, std: 'learned', min_std: 0.01, max_std: 0.1, temp: 0.1, lr: 3e-5, eps: 1e-5, grad_clip: 100.0, outscale: 1.0, absmax: null}
+  critic:
+    {num_models: 5, num_subsample: 2, layers: 2, dist: 'normal_std_fixed', slow_target: True, slow_target_update: 1, slow_target_fraction: 0.02, lr: 3e-5, eps: 1e-5, grad_clip: 100.0, outscale: 0.0}
+  reward_head:
+    {layers: 2, dist: 'normal_std_fixed', outscale: 0.0}
+  cont_head:
+    {layers: 2, loss_scale: 1.0, outscale: 1.0}
+  dyn_scale: 0.5
+  rep_scale: 0.1
+  kl_free: 1.0
+  weight_decay: 0.0
+  unimix_ratio: 0.01
+  initial: 'learned'
+
+  # Training
+  batch_size: 16
+  batch_length: 32
+  model_lr: 1e-5
+  opt_eps: 1e-8
+  grad_clip: 1000
+  opt: 'adam'
+  discount: 0.99
+  discount_lambda: 0.95
+  imag_horizon: 7
+
+  # DP Config
+  dp:
+    train_steps: 1000000
+    ft_steps: 1000
+    batch_size: 128
+    lr: 1e-5
+    max_iterations: 500000
+    log_freq: 100
+    eval_freq: 5000
+    schedule_freq: 1
+    devices: 1
+    device: 'cuda:0'
+    seed: 292285
+    action_space: 'deltas'
+    ac_chunk: 8
+    img_chunk: 2
+    num_cams: 2
+    train_transform: 'gpu_medium'
+    debug: False
+    print_config: False
+    pretrained_ckpt: ""
+    pref_ckpt: ""
+
+    shared_mlp: []
+    use_if_ckpt_present: False
+  
+  pref:
+    lr: 1e-4
+    batch_size: 128
+    train_steps: 200
+    exp_loss_scale: 1.0
+    rec_loss_scale: 1.0
+    dpo_loss_scale: 1.0
+    
+real:
+  done_mode: 1 # can be 0, 1, 2
+  action_repeat: 1
+  shape_rewards: False
+  
+  dp:
+    shared_mlp: []
+    train_steps: 30000
+    eval_freq: 100000
+
+  env_max_steps:
+    {drawer: 200, pot: 200, tea: 300}
+
+  env_time_limits:
+    {drawer: 200, pot: 200, tea: 300}
+    
+robomimic:
+  done_mode: 1 # can be 0, 1, 2
+  action_repeat: 1
+  shape_rewards: True
+  
+  dp:
+    shared_mlp: []
+    train_steps: 30000
+    eval_freq: 150000
+
+  env_max_steps:
+    {lift: 1e5, can: 5e5, square: 5e5}
+  env_time_limits:
+    {lift: 100, can: 200, square: 200}
+
+  reset_step:
+    {lift: 1, can: 1, square: 1}
+
+robocasa:
+  done_mode: 1 # can be 0, 1, 2
+  action_repeat: 3
+  
+  dp:
+    shared_mlp: []
+    train_steps: 30000
+    eval_freq: 12000
+
+  env_max_steps:
+    { 
+      stack: 3e5, door: 1e5, bread: 3e5,
+      cereal: 5e5, nutassemblyround: 5e5, 
+      breadcanfixed: 5e5, breadcanrandom: 5e5, 
+    }
+
+  env_time_limits:
+    {stack: 150, door: 200, bread: 200,
+    cereal: 750, nutassemblyround: 1500,
+    breadcanfixed: 2000, breadcanrandom: 2000}
+  warmup_step:
+    {stack: 25000, door: 15000, bread: 25000,
+    cereal: 25, nutassemblyround: 30,
+    breadcanfixed: 30, breadcanrandom: 30}
+  reset_step:
+    {stack: 1, door: 1, bread: 1,
+    cereal: 1, nutassemblyround: 1, breadcanrandom: 1}
+
+maniskill:
+  action_repeat: 2
+  image_size: 64
+  use_cpu_env: True
+  
+  dp:
+    shared_mlp: []
+    train_steps: 30000
+    eval_freq: 12000
+    
+  env_max_steps:
+    {pullcube: 1e5, liftpeg: 3e5, pokecube: 3e5}
+  env_time_limits:
+    {pullcube: 50, liftpeg: 150, pokecube: 100}
+  reset_step:
+    {pullcube: 1, liftpeg: 1, pokecube: 1}
+    
+# Top Level Options
+# Train DP
+cfg_dp_training:
+  dp:
+    pretrained_ckpt: null
+
+# Train DP
+cfg_pretraining:
+  train_base: True
+
+cfg_far:
+  recovery: True
+
+cfg_eval_recovery:
+  eval_recovery: True
+
+cfg_warmup_critic:
+  warmup_critic: True
+
+cfg_policy_improvement:
+  policy_improvement: True
+
+debug:
+  debug: True
+  logdir: "debug_logs"
+  pretrain: 1
+  prefill: 1
+  batch_size: 4
+  batch_length: 8
+  num_exp_trajs: 5
+  num_exp_val_trajs: 1
+  eval_episode_num: 0
+  eval_num_runs: 3
+  steps_per_batch: 10
+  train_ratio: 50
+  num_envs: 3
+  num_buffer_transitions: 50
+  visualize_eval: True
+
+  dp:
+    train_steps: 10
+    eval_freq: 10
+  
+  encoder_net:
+    train_steps: 10
+    eval_interval: 2
+  
+  use_wandb: False
