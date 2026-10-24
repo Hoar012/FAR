@@ -76,4 +76,3 @@ bash scripts/continual.sh
 This codebase is inspired from the following repositories:
 1. Sudeep Dasari's implementation of Diffusion Policy in [DiT-policy](https://github.com/sudeepdasari/dit-policy) 
 2. Arnav's implementation of [SAILOR](https://github.com/arnavkj1995/SAILOR)
-3. Tony's implementation of [ACT](https://github.com/tonyzhaozh/act).
