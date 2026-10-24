@@ -4,7 +4,6 @@
 
 ## News
 
-2024.11.24 Release code and model weights.
 - **2026.10.24** Code released. Give it a try!🚀🚀
 - **2026.9.4** FAR has been accepted to CoRL 2026!🎉🎉
 
