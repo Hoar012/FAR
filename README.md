@@ -23,7 +23,7 @@ Visit our [Project Page](https://hoar012.github.io/FAR-Project/) for video demos
 - [🤝 BibTeX](#-bibtex)
 - [🙏 Acknowledgements](#-acknowledgements)
 
-## 🛠️ Setup :
+## 🛠️ Setup
 Create a ```conda``` environment and install dependencies.
 ```bash
 SUITE="robomimic" # [robomimic | maniskill | robocasa]
@@ -34,7 +34,7 @@ git clone https://github.com/robocasa/robocasa
 cd robocasa && git checkout 9f14a76cde2b87c473cbbc5a87eb975b80c2cab6 && pip install -e . && cd ..
 ```
 
-## 💾 Expert datasets:
+## 💾 Expert datasets
 Follow instructions in [datasets/README.md](https://github.com/Hoar012/FAR-scratch/blob/main/datasets/README.md) to download and extract the datasets for the given environments and suites. For RoboMimic tasks, we use the datasets provided in the benchamark, whereas demonstrations are collected for ManiSkill and RoboSuite tasks via a human teleoperator using a 3D space mouse. Once downloaded and extracted, run the following command to store videos of data loaded in the expert buffer to inspect if the expert dataset is loaded correctly.
 
 ## 🚀 Training and evaluation
@@ -72,7 +72,7 @@ bash scripts/continual.sh
 }
 ```
 
-## 🙏 Acknowledgements:
+## 🙏 Acknowledgements
 This codebase is inspired from the following repositories:
 1. Sudeep Dasari's implementation of Diffusion Policy in [DiT-policy](https://github.com/sudeepdasari/dit-policy) 
 2. Arnav's implementation of [SAILOR](https://github.com/arnavkj1995/SAILOR)
